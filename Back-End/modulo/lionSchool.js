@@ -192,3 +192,4 @@ module.exports = {
     getAlunosCurso,
     getAlunosStatus
 }
+console.log(getAlunos())

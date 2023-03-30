@@ -1,9 +1,9 @@
 'use strict'
 
 import { cursos } from "../recursos/cursos.js"
-import { alunos } from "../recursos/alunos.js"
+import { alunos } from "./alunos.js"
 
-console.log(alunos[9].curso[0].sigla)
+
 
 
 const criarCursos = (cursos, indice) => {
@@ -41,36 +41,31 @@ const carregarCurso = () => {
 
 const criarAluno = () => {
 
-    const si = 'RDS'
+    let siglaEscolhida = 'RDS'
 
-    alunos.forEach(function (aluno) {
+            let divAluno = document.createElement('div')
+            divAluno.classList.add('aluno-turma')
 
-        if (aluno.curso[0].sigla == si) {
-
-            console.log(aluno.nome)
-
-            const cardAluno = document.createElement('a')
+            let cardAluno = document.createElement('a')
             cardAluno.classList.add('aluno')
 
-
-            const imageAluno = document.createElement('img')
+            let imageAluno = document.createElement('img')
             imageAluno.classList.add('foto-aluno')
-            imageAluno.src = `../img/${aluno.foto}`
+            imageAluno.src = `../img/${alunos.foto}`
 
-            const nomeDoAluno = document.createElement('p')
+            let nomeDoAluno = document.createElement('p')
             nomeDoAluno.classList.add('nome-aluno')
-            nomeDoAluno.textContent = aluno.nome
+            nomeDoAluno.textContent = alunos.nome
 
-            cardAluno.append(imageAluno, nomeDoAluno)
 
-            cardAluno.onclick = () => ((carregarAlunos(indice)))
+            divAluno.append(imageAluno, nomeDoAluno)
+            cardAluno.append(divAluno)
+
             console.log(cardAluno)
+            return cardAluno
+        
 
 
-        }
-        return card
-
-    })
 
 }
 
@@ -78,11 +73,10 @@ const carregarAlunos = () => {
     const turma = document.getElementById('turma')
     const cardAluno = alunos.map(criarAluno)
 
-
     turma.replaceChildren(...cardAluno)
 }
 
-const carregarPagina = (titulo) => {
+const carregarPagina = () => {
     const home = document.getElementById('home')
     const alunos = document.getElementById('alunos')
     const filtro = document.getElementById('filter')

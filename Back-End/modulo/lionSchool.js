@@ -76,7 +76,7 @@ const getAlunoMatricula = function (numeroDaMatricula) {
     let arrayDeAluno = []
     let arrayDeDisciplina = []
     let matricula = numeroDaMatricula
-//
+
     listaDeAlunos.alunos.forEach(function (aluno) {
         if (aluno.matricula == matricula) {
             let jsonAluno = {}

@@ -3,9 +3,6 @@
 import { cursos } from "../recursos/cursos.js"
 import { alunos } from "./alunos.js"
 
-
-
-
 const criarCursos = (cursos, indice) => {
 
     // endpoint - 1
@@ -39,48 +36,49 @@ const carregarCurso = () => {
 
 }
 
-const criarAluno = () => {
-
-    let siglaEscolhida = 'RDS'
-
-            let divAluno = document.createElement('div')
-            divAluno.classList.add('aluno-turma')
-
-            let cardAluno = document.createElement('a')
-            cardAluno.classList.add('aluno')
-
-            let imageAluno = document.createElement('img')
-            imageAluno.classList.add('foto-aluno')
-            imageAluno.src = `../img/${alunos.foto}`
-
-            let nomeDoAluno = document.createElement('p')
-            nomeDoAluno.classList.add('nome-aluno')
-            nomeDoAluno.textContent = alunos.nome
+const criarAluno = (alunos, indice, siglaEscolhida) => {
 
 
-            divAluno.append(imageAluno, nomeDoAluno)
-            cardAluno.append(divAluno)
+    // if (siglaEscolhida == alunos.sigla) {
+        const divAluno = document.createElement('div')
+        divAluno.classList.add('aluno-turma')
 
-            console.log(cardAluno)
-            return cardAluno
-        
+        const cardAluno = document.createElement('a')
+        cardAluno.classList.add('aluno')
+
+        const imageAluno = document.createElement('img')
+        imageAluno.classList.add('foto-aluno')
+        imageAluno.src = `./img/${alunos.foto}`
+
+        const nomeDoAluno = document.createElement('p')
+        nomeDoAluno.classList.add('nome-aluno')
+        nomeDoAluno.textContent = alunos.nome
+
+        cardAluno.append(imageAluno, nomeDoAluno)
+        cardAluno.onclick = () => (carregarAlunos(indice))
+        divAluno.append(cardAluno)
+
+        console.log(divAluno)
+        return divAluno
+    // }
 
 
 
 }
 
-const carregarAlunos = () => {
+const carregarAlunos = (indice) => {
     const turma = document.getElementById('turma')
     const cardAluno = alunos.map(criarAluno)
+    console.log(indice)
 
     turma.replaceChildren(...cardAluno)
 }
 
-const carregarPagina = () => {
+const carregarPagina = (indice) => {
     const home = document.getElementById('home')
     const alunos = document.getElementById('alunos')
     const filtro = document.getElementById('filter')
-
+    console.log(indice)
 
     home.style.display = 'none'
 

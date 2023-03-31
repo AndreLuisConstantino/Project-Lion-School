@@ -54,7 +54,6 @@
 .alunos-turma {
     width: auto;
     height: auto;
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     display: grid;
     justify-content: space-between;
@@ -76,7 +75,7 @@
 
 .aluno-turma p{
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #fff;
     font-family: 'Poppins', sans-serif;
 }

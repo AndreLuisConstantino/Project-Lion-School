@@ -15,8 +15,8 @@ const bodyParser = require('body-parser')
 const app = express()
 
 //Import do arquivo modulo
-const lionSchool = require('./modulo/lionSchool.js')
-const { getAlunos } = require('./modulo/lionSchool.js')
+const lionSchool = require('./Back-End/modulo/lionSchool.js')
+const { getAlunos } = require('./Back-End/modulo/lionSchool.js')
 
 app.use((request, response, next) => {
 

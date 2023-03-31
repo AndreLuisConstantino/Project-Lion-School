@@ -86,7 +86,7 @@ const getAlunoMatricula = function (numeroDaMatricula) {
             aluno.curso.forEach(function (curso) {
                 jsonAluno.curso = curso.nome
                 jsonAluno.sigla = curso.sigla
-                curso.disciplinas.forEach((disciplina) => {
+                curso.disciplinas.forEach(function (disciplina) {
                     let jsonDisciplina = {}
                     jsonDisciplina.nome = disciplina.nome
                     jsonDisciplina.carga = disciplina.carga

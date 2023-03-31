@@ -1,8 +1,10 @@
 .alunos{
     display: none;
     flex-direction: column;
-    height: auto;
+    place-content: center;
+    height: 74.4vh;
     width: 100%;
+    justify-content: space-between;
     
 }
 .filtro{
@@ -54,9 +56,10 @@
 .alunos-turma {
     width: auto;
     height: auto;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     display: grid;
-    justify-content: space-between;
+    
+    
 }
 
 .aluno-turma{

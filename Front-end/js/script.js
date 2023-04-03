@@ -1,10 +1,14 @@
 'use strict'
 
-import { cursosLionSchool } from "./api-lion-school.js"
+import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion } from "./api-lion-school.js"
 import { alunos } from "./alunos.js"
 
+
+// carregar curso
 let cursosLion = await cursosLionSchool()
 let cursos = cursosLion.curso
+
+let statusAluno = statusAlunoLion()
 
 const criarCursos = (cursos, indice) => {
 
@@ -24,10 +28,11 @@ const criarCursos = (cursos, indice) => {
     nomeDoCurso.textContent = cursos.sigla
 
     divCurso.append(imageCurso, nomeDoCurso)
-    cardCurso.onclick = () => (carregarPagina(indice))
-    cardCurso.append(divCurso)
-    console.log(cardCurso)
+    cardCurso.onclick = () => {
 
+        carregarPagina(indice)
+    }
+    cardCurso.append(divCurso)
     return cardCurso
 
 }
@@ -35,19 +40,13 @@ const criarCursos = (cursos, indice) => {
 const carregarCurso = () => {
     const container = document.getElementById('cursos')
     const cardCurso = cursos.map(criarCursos)
-    console.log(cardCurso)
+
 
     container.replaceChildren(...cardCurso)
 
 }
 
-const criarAluno = (alunos, indice, siglaEscolhida) => {
-
-
-    // if (siglaEscolhida == alunos.sigla) {
-    const tituloCurso = document.createElement('h1')
-    const titulo = alunos.curso
-    tituloCurso.textContent
+const criarAluno = (alunosCurso) => {
 
     const divAluno = document.createElement('div')
     divAluno.classList.add('aluno-turma')
@@ -57,56 +56,60 @@ const criarAluno = (alunos, indice, siglaEscolhida) => {
 
     const imageAluno = document.createElement('img')
     imageAluno.classList.add('foto-aluno')
-    imageAluno.src = `./img/${alunos.foto}`
+    imageAluno.src = `./img/${alunosCurso.foto}`
 
     const nomeDoAluno = document.createElement('p')
     nomeDoAluno.classList.add('nome-aluno')
-    nomeDoAluno.textContent = alunos.nome
+    nomeDoAluno.textContent = alunosCurso.nome
+
+    // const alunosCor = alunosCurso.
 
     cardAluno.append(imageAluno, nomeDoAluno)
-    cardAluno.onclick = () => (carregarAlunos(indice))
     divAluno.append(cardAluno)
 
-
     return divAluno
-    // }
-
-
 
 }
 
-const carregarAlunos = (indice) => {
+const carregarAlunos = async (sigla, titulo) => {
+    const alunos = document.getElementById('alunos')
+
+    const tituloPage = document.createElement('h1')
+    tituloPage.classList.add('titulo-curso')
+    const tituloCurso = titulo
+
+    tituloPage.textContent = tituloCurso.substring(6)
+
+    console.log(tituloPage)
+
+    let alunosDoCurso = await alunosDoCursoLionSchool(sigla)
+    let alunosCurso = alunosDoCurso.alunos
+
     const turma = document.getElementById('turma')
-    const cardAluno = alunos.map(criarAluno)
-    console.log(indice)
+    const cardAluno = alunosCurso.map(criarAluno)
+
 
     turma.replaceChildren(...cardAluno)
+    alunos.append(tituloPage, turma)
 }
 
 const carregarPagina = (indice) => {
     const home = document.getElementById('home')
     const alunos = document.getElementById('alunos')
-    const tituloPage = document.createElement('h1')
-    const titulo = cursos[indice].nome
-
-    const sigla = cursos[indice].sigla
-    tituloPage.textContent = titulo.replace('001 - Técnico em ', '')
-
-    alunos.append(tituloPage)
-    console.log(indice)
     const filtro = document.getElementById('filter')
 
-
-
-    console.log(tituloPage, sigla)
-
     home.style.display = 'none'
-
     alunos.style.display = 'flex'
-
     filtro.style.display = 'flex'
 
-    carregarAlunos()
+
+
+
+    const sigla = cursos[indice].sigla
+    const titulo = cursos[indice].nome
+    carregarAlunos(sigla, titulo)
+
+
 
 }
 

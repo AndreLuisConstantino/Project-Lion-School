@@ -1,11 +1,14 @@
 .alunos{
     display: none;
     flex-direction: column;
-    place-content: center;
-    height: 74.4vh;
+    place-content: start;
+    height: auto; 
     width: 100%;
-    justify-content: space-between;
     
+}
+
+.alunos div{
+    place-items: center;
 }
 .filtro{
     width: 100%;

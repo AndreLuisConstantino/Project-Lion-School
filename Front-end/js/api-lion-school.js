@@ -5,7 +5,6 @@ export const cursosLionSchool = async () => {
 
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
 
     return data
 
@@ -17,7 +16,6 @@ export const alunosDoCursoLionSchool = async (siglaCurso) => {
 
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
 
     return data
 
@@ -28,19 +26,21 @@ export const alunosDeTodosCursos = async () => {
 
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
 
     return data
 }
 
 export const statusAlunoLion = async (status) => {
 
+
     const url = `https://api-lion-school.cyclic.app/v1/lion-school/alunos?status=${status}`
 
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
+
+    return data
+
+    
 }
 
-alunosDoCursoLionSchool('DS')
-alunosDeTodosCursos()
+statusAlunoLion('Finalizado')

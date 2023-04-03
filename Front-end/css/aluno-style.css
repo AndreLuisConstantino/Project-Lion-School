@@ -100,3 +100,39 @@ footer {
     align-items: center;
     justify-content: center;
 }
+
+@media (max-width: 375px) {
+    .logo__container {
+        gap: 5px;
+    }
+    .logo__container p {
+        font-size: 1.25rem;
+    }
+    .exit__container p {
+        display: none;
+    }
+    footer {
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+    }
+    .contact__container {
+        height: 50%;
+        width: 80vw;
+        gap: 2vh;
+    }
+    .contact {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+        font-size: 1.25rem;
+        text-align: center;
+    }
+    .social-media {
+        display: flex;
+        flex-direction: column;
+    }
+    .copyright__container span {
+        font-size: 1.25rem;
+    }
+}

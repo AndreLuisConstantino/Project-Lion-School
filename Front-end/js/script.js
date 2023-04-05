@@ -118,12 +118,20 @@ const carregarAlunos = async (sigla, titulo) => {
         let statusAluno = await statusAlunoLion('Cursando')
         let alunoStatus = statusAluno.alunos
 
-        const cardAluno = alunoStatus.map(criarAluno)
+        console.log(alunoStatus[1].sigla)
+        console.log(sigla)
+
+        alunoStatus.forEach(function (aluno) {
+            if (aluno.sigla == sigla) {
+                console.log(aluno)
+                console.log(criarAluno(aluno))
+            }
+
+        })
 
         turma.replaceChildren(...cardAluno)
         alunos.append(tituloPage, turma)
 
-        console.log(cardAluno)
     }
 
     status.onclick = () => {

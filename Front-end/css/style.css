@@ -14,6 +14,10 @@ header{
     justify-content: space-between;
     
 }
+main{
+    max-height: auto;
+    min-height: 69.2vh;
+}
 .logo{
     display: flex;
     align-items: center;

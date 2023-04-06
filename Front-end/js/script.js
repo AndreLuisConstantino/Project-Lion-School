@@ -1,14 +1,14 @@
 'use strict'
 
-import { cursos } from "../recursos/cursos.js"
-import { alunos } from "../recursos/alunos.js"
+import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion } from "./api-lion-school.js"
 
-console.log(alunos[9].curso[0].sigla)
+let cursosLion = await cursosLionSchool()
+let cursos = cursosLion.curso
 
+let sair = document.getElementById('sair')
 
 const criarCursos = (cursos, indice) => {
 
-    // endpoint - 1
     const cardCurso = document.createElement('a')
     cardCurso.classList.add('curso')
 
@@ -24,9 +24,10 @@ const criarCursos = (cursos, indice) => {
     nomeDoCurso.textContent = cursos.sigla
 
     divCurso.append(imageCurso, nomeDoCurso)
-    cardCurso.onclick = () => (carregarPagina(indice))
+    cardCurso.onclick = () => {
+        carregarPagina(indice)
+    }
     cardCurso.append(divCurso)
-
     return cardCurso
 
 }
@@ -39,62 +40,147 @@ const carregarCurso = () => {
 
 }
 
-const criarAluno = () => {
+const criarAluno = (alunosCurso, indice) => {
 
-    const si = 'RDS'
+    const divAluno = document.createElement('div')
+    divAluno.classList.add('aluno-turma')
 
-    alunos.forEach(function (aluno) {
+    const cardAluno = document.createElement('a')
+    cardAluno.classList.add('aluno')
 
-        if (aluno.curso[0].sigla == si) {
+    const imageAluno = document.createElement('img')
+    imageAluno.classList.add('foto-aluno')
+    imageAluno.src = `./img/${alunosCurso.foto}`
 
-            console.log(aluno.nome)
+    const nomeDoAluno = document.createElement('p')
+    nomeDoAluno.classList.add('nome-aluno')
+    nomeDoAluno.textContent = alunosCurso.nome
 
-            const cardAluno = document.createElement('a')
-            cardAluno.classList.add('aluno')
+    console.log(alunosCurso.status)
 
+    if (alunosCurso.status == 'Finalizado') {
+        divAluno.style.backgroundColor = '#E5B657'
 
-            const imageAluno = document.createElement('img')
-            imageAluno.classList.add('foto-aluno')
-            imageAluno.src = `../img/${aluno.foto}`
+    }
 
-            const nomeDoAluno = document.createElement('p')
-            nomeDoAluno.classList.add('nome-aluno')
-            nomeDoAluno.textContent = aluno.nome
+    cardAluno.append(imageAluno, nomeDoAluno)
+    divAluno.append(cardAluno)
+    divAluno.onclick = () => {
+        carregarAluno(indice)
+        console.log(alunosCurso.nome)
+    }
 
-            cardAluno.append(imageAluno, nomeDoAluno)
-
-            cardAluno.onclick = () => ((carregarAlunos(indice)))
-            console.log(cardAluno)
-
-
-        }
-        return card
-
-    })
+    return divAluno
 
 }
 
-const carregarAlunos = () => {
-    const turma = document.getElementById('turma')
-    const cardAluno = alunos.map(criarAluno)
+const carregarAluno = () => {
 
+}
+
+const carregarAlunos = async (sigla, titulo) => {
+    let finalizado = document.getElementById('finalizado')
+    let status = document.getElementById('todos')
+    let cursando = document.getElementById('cursando')
+
+
+    const alunos = document.getElementById('alunos')
+
+    const tituloPage = document.createElement('h1')
+    tituloPage.classList.add('titulo-curso')
+    const tituloCurso = titulo
+
+    tituloPage.textContent = tituloCurso.substring(6)
+
+    let alunosDoCurso = await alunosDoCursoLionSchool(sigla)
+    let alunosCurso = alunosDoCurso.alunos
+
+    const turma = document.getElementById('turma')
+    const cardAluno = alunosCurso.map(criarAluno)
+
+    finalizado.onclick = async () => {
+        let statusAluno = await statusAlunoLion('Finalizado')
+        let alunoStatus = statusAluno.alunos
+
+        const cardAluno = alunoStatus.map(function (aluno) {
+            if (aluno.sigla == sigla) {
+                const card = criarAluno(aluno)
+                return card
+            }
+        })
+
+        const CardAlunoFinalizado = cardAluno.filter(function (alunoFinalizado) {
+            return alunoFinalizado !== undefined;
+        });
+
+        turma.replaceChildren(...CardAlunoFinalizado)
+        alunos.append(tituloPage, turma)
+
+    }
+
+    cursando.onclick = async () => {
+        const turma = document.getElementById('turma')
+        const statusAluno = await statusAlunoLion('Cursando')
+        const alunoStatus = statusAluno.alunos
+
+        const cardAluno = alunoStatus.map(function (aluno) {
+            if (aluno.sigla == sigla) {
+                const card = criarAluno(aluno)
+                return card
+            }
+        })
+
+        const CardAlunoCursando = cardAluno.filter(function (alunoCursando) {
+            return alunoCursando !== undefined;
+        });
+
+        turma.replaceChildren(...CardAlunoCursando)
+        alunos.append(tituloPage, turma)
+
+    }
+
+    status.onclick = () => {
+        const cardAluno = alunosCurso.map(criarAluno)
+        turma.replaceChildren(...cardAluno)
+        alunos.append(tituloPage, turma)
+        console.log(alunos)
+    }
 
     turma.replaceChildren(...cardAluno)
+    alunos.append(tituloPage, turma)
 }
 
-const carregarPagina = (titulo) => {
+const carregarPagina = (indice) => {
     const home = document.getElementById('home')
     const alunos = document.getElementById('alunos')
     const filtro = document.getElementById('filter')
 
 
     home.style.display = 'none'
-
     alunos.style.display = 'flex'
+    sair.textContent = 'Voltar'
+    sairEVoltarPagina(sair)
     filtro.style.display = 'flex'
 
-    carregarAlunos()
+    const sigla = cursos[indice].sigla
+    const titulo = cursos[indice].nome
+    carregarAlunos(sigla, titulo)
 
 }
 
+const sairEVoltarPagina = (estado) => {
+    let sair = document.getElementById('sair')
+
+    sair.onclick = () => {
+        if (estado.textContent == 'Sair') {
+            window.close()
+        } else {
+
+        }
+
+    }
+}
+
+
 carregarCurso()
+sairEVoltarPagina(sair)

@@ -1,6 +1,6 @@
 'use strict'
 
-import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion } from "./api-lion-school.js"
+import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion, alunosPorAno } from "./api-lion-school.js"
 
 let cursosLion = await cursosLionSchool()
 let cursos = cursosLion.curso
@@ -56,7 +56,6 @@ const criarAluno = (alunosCurso, indice) => {
     nomeDoAluno.classList.add('nome-aluno')
     nomeDoAluno.textContent = alunosCurso.nome
 
-    console.log(alunosCurso.status)
 
     if (alunosCurso.status == 'Finalizado') {
         divAluno.style.backgroundColor = '#E5B657'
@@ -83,6 +82,8 @@ const carregarAlunos = async (sigla, titulo) => {
     let status = document.getElementById('todos')
     let cursando = document.getElementById('cursando')
 
+
+    const ano = document.getElementById('button-ano')
 
     const alunos = document.getElementById('alunos')
 
@@ -143,7 +144,36 @@ const carregarAlunos = async (sigla, titulo) => {
         const cardAluno = alunosCurso.map(criarAluno)
         turma.replaceChildren(...cardAluno)
         alunos.append(tituloPage, turma)
-        console.log(alunos)
+    }
+
+    const input = document.getElementById('input-ano')
+    input.addEventListener('keydown', async function (e) {
+        if (e.key === 'Enter') {
+
+            const alunos1 = await alunosPorAno(input.value, sigla)
+            const alunosAno = alunos1.alunos
+            const alunoNovo = alunosAno.map((aluno) => {
+                const cardAluno = criarAluno(aluno)
+                return cardAluno
+            })
+
+            turma.replaceChildren(...alunoNovo)
+            alunos.append(turma)
+        }
+    })
+
+    ano.onclick = async () => {
+
+        const alunos1 = await alunosPorAno(input.value, sigla)
+        const alunosAno = alunos1.alunos
+
+        const alunoNovo = alunosAno.map((aluno) => {
+            const cardAluno = criarAluno(aluno)
+            return cardAluno
+        })
+
+        turma.replaceChildren(...alunoNovo)
+        alunos.append(turma)
     }
 
     turma.replaceChildren(...cardAluno)
@@ -180,6 +210,7 @@ const sairEVoltarPagina = (estado) => {
 
     }
 }
+
 
 
 carregarCurso()

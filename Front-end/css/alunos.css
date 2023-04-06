@@ -7,6 +7,15 @@
     
 }
 
+.input-ano__container {
+    height: 2vh;
+    width: 7vw;
+}
+
+.input-ano__container input {
+    width: 50px;
+}
+
 .alunos div{
     place-items: center;
 }
@@ -127,4 +136,6 @@
         align-items: center;
         justify-content: center;
     }
+
+    
 }

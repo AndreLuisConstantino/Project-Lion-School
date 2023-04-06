@@ -43,4 +43,13 @@ export const statusAlunoLion = async (status) => {
     
 }
 
+export const alunosPorAno = async (ano, sigla) => {
+    const url = `https://api-lion-school.cyclic.app/v1/lion-school/alunos?ano=${ano}&curso=${sigla}`
+
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return data
+}
+
 statusAlunoLion('Finalizado')

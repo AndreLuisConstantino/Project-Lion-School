@@ -165,7 +165,9 @@ const carregarAlunos = async (sigla, titulo) => {
     ano.onclick = async () => {
 
         const alunos1 = await alunosPorAno(input.value, sigla)
+
         const alunosAno = alunos1.alunos
+
 
         const alunoNovo = alunosAno.map((aluno) => {
             const cardAluno = criarAluno(aluno)

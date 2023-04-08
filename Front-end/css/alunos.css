@@ -9,11 +9,26 @@
 
 .input-ano__container {
     height: 2vh;
-    width: 7vw;
+    width: 8vw;
+}
+
+.input-ano__container button{
+    background-color: #3347B0;
+    cursor: pointer;
+    color: #BCC2E5;
+    width: 30px;
+    height: 25px;
+    border: none;
+    size: 25px;
+    font-weight: bold;
 }
 
 .input-ano__container input {
-    width: 50px;
+    width: 75px;
+    height: 25px;
+    padding-left: 5px;
+    background-color: #3347B0;
+    color: white;
 }
 
 .alunos div{
@@ -128,6 +143,9 @@
 }
 .dropdown:hover .dropdown-content {
     display: block;
+}
+.input-ano{
+    width: 150px;
 }
 
 @media (max-width: 640px){

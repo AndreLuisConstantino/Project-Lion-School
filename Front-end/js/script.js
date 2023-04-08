@@ -1,6 +1,6 @@
 'use strict'
 
-import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion, alunosPorAno } from "./api-lion-school.js"
+import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion, alunosPorAno, dadosAluno } from "./api-lion-school.js"
 
 let cursosLion = await cursosLionSchool()
 let cursos = cursosLion.curso
@@ -65,15 +65,52 @@ const criarAluno = (alunosCurso, indice) => {
     cardAluno.append(imageAluno, nomeDoAluno)
     divAluno.append(cardAluno)
     divAluno.onclick = () => {
-        carregarAluno(indice)
-        console.log(alunosCurso.nome)
+        let matricula = alunosCurso.matricula
+        carregarAluno(indice, matricula)
     }
 
     return divAluno
 
 }
 
-const carregarAluno = () => {
+const criarDadosDoAluno = (dadosAlun) => {
+
+    const divAluno = document.createElement('div')
+    divAluno.classList.add('aluno-info__container')
+
+    const imageAluno = document.createElement('img')
+    imageAluno.classList.add('foto-aluno')
+    imageAluno.src = `./img/${dadosAlun.foto}`
+
+    const nomeDoAluno = document.createElement('p')
+    nomeDoAluno.classList.add('nome-aluno')
+    nomeDoAluno.textContent = dadosAlun.nome
+
+    divAluno.append(imageAluno, nomeDoAluno)
+
+    return divAluno
+}
+
+const carregarAluno = async (indice, matricula) => {
+
+    console.log(indice, matricula)
+    const alunos = document.getElementById('alunos')
+    const filtro = document.getElementById('filter')
+    const alun = document.getElementById('alno')
+    const grafico = document.getElementById('grafico')
+
+    alunos.style.display = 'none'
+    filtro.style.display = 'none'
+    alun.style.display = 'flex'
+    grafico.style.display = 'flex'
+
+    let dadosAlun = await dadosAluno(matricula)
+    let aluno = dadosAlun.aluno.map(criarDadosDoAluno)
+
+    console.log(aluno)
+
+    alun.append(...aluno, grafico)
+
 
 }
 
@@ -165,9 +202,7 @@ const carregarAlunos = async (sigla, titulo) => {
     ano.onclick = async () => {
 
         const alunos1 = await alunosPorAno(input.value, sigla)
-
         const alunosAno = alunos1.alunos
-
 
         const alunoNovo = alunosAno.map((aluno) => {
             const cardAluno = criarAluno(aluno)
@@ -187,12 +222,12 @@ const carregarPagina = (indice) => {
     const alunos = document.getElementById('alunos')
     const filtro = document.getElementById('filter')
 
-
     home.style.display = 'none'
     alunos.style.display = 'flex'
     sair.textContent = 'Voltar'
-    sairEVoltarPagina(sair)
     filtro.style.display = 'flex'
+
+    sairEVoltarPagina(sair)
 
     const sigla = cursos[indice].sigla
     const titulo = cursos[indice].nome
@@ -207,7 +242,7 @@ const sairEVoltarPagina = (estado) => {
         if (estado.textContent == 'Sair') {
             window.close()
         } else {
-
+            window.location.reload()
         }
 
     }

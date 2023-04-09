@@ -86,6 +86,8 @@ const criarDadosDoAluno = (dadosAlun) => {
     nomeDoAluno.classList.add('nome-aluno')
     nomeDoAluno.textContent = dadosAlun.nome
 
+    console.log(dadosAlun.disciplinas)
+
     divAluno.append(imageAluno, nomeDoAluno)
 
     return divAluno
@@ -106,11 +108,123 @@ const carregarAluno = async (indice, matricula) => {
 
     let dadosAlun = await dadosAluno(matricula)
     let aluno = dadosAlun.aluno.map(criarDadosDoAluno)
+    // let mediaDeNotas = 
+    // let mediaAluno = dadosAlun.disciplinas.map()
 
+    graficoMedia(matricula)
     console.log(aluno)
 
     alun.append(...aluno, grafico)
 
+}
+
+const graficoMedia = async (matricula) => {
+    const ctx = document.getElementById('myChart')
+
+    let notasMedia = []
+    let coresGrafico = []
+    let nomeDisciplinas = []
+    let siglaDisclipina = []
+
+
+    let dadosAlun = await dadosAluno(matricula)
+    let aluno = dadosAlun.aluno
+    let adas = []
+    // entra no array de disciplinas pegando o nome
+    aluno.forEach(function (alun) {
+
+        alun.disciplinas.forEach(function (dis) {
+            console.log(dis.nome)
+            let nomes = dis.nome
+            let nome = nomes.split('')
+
+            nome.forEach(function (letra) {
+                console.log(nome)
+                if (letra != letra.toUpperCase()) {
+                    nome.slice(letra);
+                    adas.push(letra)
+
+
+                }
+
+
+            })
+
+
+
+
+
+        })
+    });
+
+    console.log(nomeDisciplinas)
+
+    // pega media e status
+    aluno.forEach(function (alun) {
+        alun.disciplinas.forEach(function (dis) {
+            let media = dis.media
+            if (media <= 40) {
+                let color = 'rgba(178, 34, 34, 1)'
+                coresGrafico.push(color)
+            } else if (media >= 50 && media <= 60) {
+                let color = 'rgba(255, 215, 0, 1)'
+                coresGrafico.push(color)
+            } else if (media > 60) {
+                let color = 'rgba(135, 206, 250, 1)'
+                coresGrafico.push(color)
+            }
+
+            notasMedia.push(media)
+            let status = dis.status
+
+        })
+    });
+
+    let sigla = []
+
+
+
+    // console.log(notasMedia)
+    // nomeDisciplinas.forEach(function (nomes) {
+    //     let a = nomes
+
+    //     a.forEach(function (palavras) {
+    //         let letras = palavras.substring(0, 1)
+
+    //         if (letras == letras.toLowerCase()) {
+    //             console.log('sim')
+    //         } else {
+
+    //         }
+
+    //     })
+    // })
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'uau'],
+            datasets: [{
+                label: 'Media da nota',
+                data: notasMedia,
+                backgroundColor: coresGrafico,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Media de notas de acordo com materia'
+                }
+            }
+        }
+    });
 
 }
 

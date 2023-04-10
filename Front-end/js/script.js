@@ -1,6 +1,6 @@
 'use strict'
 
-import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion, alunosPorAno } from "./api-lion-school.js"
+import { cursosLionSchool, alunosDoCursoLionSchool, statusAlunoLion, alunosPorAno, dadosAluno } from "./api-lion-school.js"
 
 let cursosLion = await cursosLionSchool()
 let cursos = cursosLion.curso
@@ -65,15 +65,142 @@ const criarAluno = (alunosCurso, indice) => {
     cardAluno.append(imageAluno, nomeDoAluno)
     divAluno.append(cardAluno)
     divAluno.onclick = () => {
-        carregarAluno(indice)
-        console.log(alunosCurso.nome)
+        let matricula = alunosCurso.matricula
+        carregarAluno(indice, matricula)
     }
 
     return divAluno
 
 }
 
-const carregarAluno = () => {
+const criarDadosDoAluno = (dadosAlun) => {
+
+    const divAluno = document.createElement('div')
+    divAluno.classList.add('aluno-info__container')
+
+    const imageAluno = document.createElement('img')
+    imageAluno.classList.add('foto-aluno')
+    imageAluno.src = `./img/${dadosAlun.foto}`
+
+    const nomeDoAluno = document.createElement('p')
+    nomeDoAluno.classList.add('nome-aluno')
+    nomeDoAluno.textContent = dadosAlun.nome
+
+    console.log(dadosAlun.disciplinas)
+
+    divAluno.append(imageAluno, nomeDoAluno)
+
+    return divAluno
+}
+
+const carregarAluno = async (indice, matricula) => {
+
+
+    const alunos = document.getElementById('alunos')
+    const filtro = document.getElementById('filter')
+    const alun = document.getElementById('alno')
+    const grafico = document.getElementById('grafico')
+
+    alunos.style.display = 'none'
+    filtro.style.display = 'none'
+    alun.style.display = 'flex'
+    grafico.style.display = 'flex'
+
+    let dadosAlun = await dadosAluno(matricula)
+    let aluno = dadosAlun.aluno.map(criarDadosDoAluno)
+
+
+    graficoMedia(matricula)
+
+    alun.append(...aluno, grafico)
+
+}
+
+const graficoMedia = async (matricula) => {
+    const ctx = document.getElementById('myChart')
+
+    let notasMedia = []
+    let coresGrafico = []
+    let nomeDisciplinas = []
+    let letrasDisciplinas = []
+    let siglaDisciplinas = []
+
+    let dadosAlun = await dadosAluno(matricula)
+    let aluno = dadosAlun.aluno
+    aluno.forEach(function (alun) {
+
+        alun.disciplinas.forEach(function (dis) {
+            console.log(dis.nome)
+            let nomes = dis.nome
+            nomeDisciplinas.push(nomes)
+            let nome = nomes.split('')
+
+            letrasDisciplinas.push(nome)
+
+            letrasDisciplinas.forEach(function (letra) {
+                const siglaDasDisciplinas = letra.filter(function (letraArray) {
+                    if (letraArray === letraArray.toLowerCase() || letraArray != letraArray.toUpperCase()) {
+                        letra.splice(letra.indexOf(letraArray), 1)
+                        return letra
+                    }
+                });
+            })
+        })
+    })
+
+    letrasDisciplinas.forEach(function (array) {
+        const siglas = array.reduce((accumulator, letra) => `${accumulator}${letra}`);
+        siglaDisciplinas.push(siglas)
+    })
+
+    console.log(siglaDisciplinas)
+
+    aluno.forEach(function (alun) {
+        alun.disciplinas.forEach(function (dis) {
+            let media = dis.media
+            if (media <= 40) {
+                let color = 'rgba(178, 34, 34, 1)'
+                coresGrafico.push(color)
+            } else if (media >= 50 && media <= 60) {
+                let color = 'rgba(255, 215, 0, 1)'
+                coresGrafico.push(color)
+            } else if (media > 60) {
+                let color = 'rgba(135, 206, 250, 1)'
+                coresGrafico.push(color)
+            }
+
+            notasMedia.push(media)
+
+
+        })
+    });
+
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: siglaDisciplinas,
+            datasets: [{
+                label: 'Media da nota',
+                data: notasMedia,
+                backgroundColor: coresGrafico,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Media de notas de acordo com materia'
+                }
+            }
+        }
+    });
 
 }
 
@@ -165,9 +292,7 @@ const carregarAlunos = async (sigla, titulo) => {
     ano.onclick = async () => {
 
         const alunos1 = await alunosPorAno(input.value, sigla)
-
         const alunosAno = alunos1.alunos
-
 
         const alunoNovo = alunosAno.map((aluno) => {
             const cardAluno = criarAluno(aluno)
@@ -187,12 +312,12 @@ const carregarPagina = (indice) => {
     const alunos = document.getElementById('alunos')
     const filtro = document.getElementById('filter')
 
-
     home.style.display = 'none'
     alunos.style.display = 'flex'
     sair.textContent = 'Voltar'
-    sairEVoltarPagina(sair)
     filtro.style.display = 'flex'
+
+    sairEVoltarPagina(sair)
 
     const sigla = cursos[indice].sigla
     const titulo = cursos[indice].nome
@@ -207,12 +332,11 @@ const sairEVoltarPagina = (estado) => {
         if (estado.textContent == 'Sair') {
             window.close()
         } else {
-
+            window.location.reload()
         }
 
     }
 }
-
 
 
 carregarCurso()

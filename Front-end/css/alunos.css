@@ -4,12 +4,13 @@
     place-content: start;
     height: auto;
     width: 100%;
+    justify-content: space-between;
 
 }
 
 .input-ano__container {
-    height: 2vh;
-    width: 8vw;
+    height: 0.5vh;
+    width: 14vw;
 }
 
 .input-ano__container button {
@@ -40,10 +41,14 @@
     height: 50px;
     background: #BCC2E5;
     display: none;
-    align-items: center;
     justify-content: space-between;
     padding-right: 96px;
     padding-left: 96px;
+}
+
+.pesquisa_legenda {
+    display: flex;
+    align-self: center;
 }
 
 .legenda {
@@ -91,6 +96,8 @@
     height: auto;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     display: grid;
+    margin-top: 6rem;
+    margin-bottom: 12rem;
 }
 
 .aluno-turma {
@@ -168,37 +175,40 @@
         justify-content: center;
     }
 
+    .title-len {
+        display: none;
+    }
 
-}
-
-@media(max-width:375px) {
     .filtro {
-        padding-right: 0;
-        padding-left: 0;
-        width: 100%;
-        height: 10vh;
-        display: grid;
-        grid-template-columns: 1;
-        grid-template-rows: 3;
+        padding-right: 0px;
+        padding-left: 0px;
+        flex-direction: column;
+        align-self: center;
+        justify-content: space-evenly;
+        height: 210px;
+    }
+
+    .pesquisa_legenda {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-ano__container {
+        height: 5.5vh;
+        width: 32vw;
     }
 
     .legenda {
         display: flex;
-        flex-direction: column;
-        gap: 2vw;
-    }
-
-    .input-ano__container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-        height: 5vh;
-        width: 5vw;
+        gap: 14px;
     }
 
     .titulo-curso {
-        padding: 0;
+
+        font-size: 2.5rem;
+
     }
 }

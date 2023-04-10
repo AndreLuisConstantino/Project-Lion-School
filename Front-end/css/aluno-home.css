@@ -1,8 +1,16 @@
-main {
+/* main {
     height: 80vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
+} */
+.alno {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 6rem;
+    margin-bottom: 12rem;
 }
 
 .aluno-info__container {
@@ -12,6 +20,7 @@ main {
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 12px #000;
+
 }
 
 .aluno-info__container img {
@@ -25,12 +34,12 @@ main {
 }
 
 .aluno-disciplinas__container {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     height: 51vh;
-    width: auto;
+    width: 61vw;
     box-shadow: 0px 0px 12px #000000;
 }
 
@@ -128,19 +137,29 @@ main {
     border-radius: 4px 4px 0px 0px;
 }
 
-@media (max-width: 375px) {
-    main {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
+
+
+@media (max-width: 640px) {
     .aluno-info__container {
-        height: 40vh;
-        width: 40vh;
+        height: 35vh;
+        width: 35vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         box-shadow: 0px 0px 12px #000;
+    }
+
+    .alno {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+    }
+
+    .aluno-disciplinas__container {
+        height: 45vh;
+        width: 85vw;
+        margin-bottom: 25px;
     }
 }

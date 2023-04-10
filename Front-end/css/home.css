@@ -1,4 +1,4 @@
-.home{
+.home {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -6,23 +6,27 @@
     height: 74.4vh;
     padding-left: 96px;
     padding-right: 96px;
-    
+
 }
-.titulos{
+
+.titulos {
     margin-bottom: 44px;
 }
-.title{
+
+.title {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
     font-size: 4rem;
-    
+
 }
-.curso-roxo{
+
+.curso-roxo {
     color: #3347B0;
     font-weight: 700;
 }
-.area{
+
+.area {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,32 +38,46 @@
     cursor: pointer;
     margin-bottom: 50px;
 }
-.image-figure{
+
+.image-figure {
     width: 96px;
     height: 76.79px;
 }
-.nome-curso{
+
+.nome-curso {
     font-weight: 700;
     font-size: 64px;
 }
-.area:hover{
+
+.area:hover {
     border: 1.5px solid black;
 }
 
-@media (max-width: 640px){
 
-    .home{
+
+@media (max-width: 640px) {
+
+    .home {
         padding-left: 15px;
         padding-right: 0px;
         display: grid;
         height: 100%;
         justify-items: center;
+        align-items: center;
         gap: 100px;
     }
-    .estudante{
+
+    .estudante {
         display: none;
     }
-    .area{
+
+    .area {
         margin-bottom: 85px;
+        width: auto;
+    }
+
+    .aparelhos {
+        width: 280px;
+        align-items: center;
     }
 }

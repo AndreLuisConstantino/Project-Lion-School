@@ -40,7 +40,7 @@ export const statusAlunoLion = async (status) => {
 
     return data
 
-    
+
 }
 
 export const alunosPorAno = async (ano, sigla) => {
@@ -48,6 +48,17 @@ export const alunosPorAno = async (ano, sigla) => {
 
     const response = await fetch(url)
     const data = await response.json()
+
+    return data
+}
+
+export const dadosAluno = async (matricula) => {
+
+    const url = `https://api-lion-school.cyclic.app/v1/lion-school/alunos/${matricula}`
+
+    const response = await fetch(url)
+    const data = await response.json()
+    console.log(data.aluno)
 
     return data
 }

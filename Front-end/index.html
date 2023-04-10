@@ -12,12 +12,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <script src="./js/script.js" defer type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://kit.fontawesome.com/35bab1e1be.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/alunos.css">
-    <script src="./js/script.js" defer type="module"></script>
+    <link rel="stylesheet" href="./css/aluno-home.css">
     <title>Lion school</title>
 </head>
 
@@ -45,21 +47,25 @@
                 </div>
             </div>
         </div>
-        <div class="input-ano__container">
-            <input type="text" class="input-ano" id="input-ano">
-            <button class="button-ano" id="button-ano">OK</button>
-        </div>  
-        <div class="legenda">
-            <p class="title-len">LEGENDA</p>
-            <div class="cursando">
-                <div class="color-cursando"></div>
-                <span>Cursando</span>
+        <div class="pesquisa_legenda">
+            <div class="input-ano__container">
+                <input type="text" class="input-ano" id="input-ano">
+                <button class="button-ano" id="button-ano">OK</button>
             </div>
-            <div class="finalizado">
-                <div class="color-finalizado"></div>
-                <span>Finalizado</span>
+            <div class="legenda">
+                <p class="title-len">LEGENDA</p>
+                <div class="cursando">
+                    <div class="color-cursando"></div>
+                    <span>Cursando</span>
+                </div>
+                <div class="finalizado">
+                    <div class="color-finalizado"></div>
+                    <span>Finalizado</span>
+                </div>
             </div>
         </div>
+
+
     </div>
     <main>
         <div id="home" class="home">
@@ -68,17 +74,25 @@
                     <p class="title">Escolha um <span class="curso-roxo">curso</span> </p>
                     <p class="title">para gerenciar</p>
                 </div>
-                <img src="./img/devices.svg" alt="aparelhos de midia: computador, tablet, celular">
+                <img class="aparelhos" src="./img/devices.svg" alt="aparelhos de midia: computador, tablet, celular">
             </div>
             <img class="estudante" src="./img/studant.svg" alt="estudante">
             <div id="cursos" class="cursos-icones">
-
             </div>
         </div>
 
         <div id="alunos" class="alunos">
             <div id="turma" class="alunos-turma">
 
+            </div>
+        </div>
+        <div id="alno" class="alno">
+            <div id="alun">
+
+            </div>
+
+            <div id="grafico" class="aluno-disciplinas__container">
+                <canvas id="myChart"></canvas>
             </div>
         </div>
     </main>

@@ -95,7 +95,7 @@ const criarDadosDoAluno = (dadosAlun) => {
 
 const carregarAluno = async (indice, matricula) => {
 
-    console.log(indice, matricula)
+
     const alunos = document.getElementById('alunos')
     const filtro = document.getElementById('filter')
     const alun = document.getElementById('alno')
@@ -112,7 +112,6 @@ const carregarAluno = async (indice, matricula) => {
     // let mediaAluno = dadosAlun.disciplinas.map()
 
     graficoMedia(matricula)
-    console.log(aluno)
 
     alun.append(...aluno, grafico)
 
@@ -124,42 +123,39 @@ const graficoMedia = async (matricula) => {
     let notasMedia = []
     let coresGrafico = []
     let nomeDisciplinas = []
-    let siglaDisclipina = []
-
+    let letrasDisciplinas = []
+    let siglaDisciplinas = []
 
     let dadosAlun = await dadosAluno(matricula)
     let aluno = dadosAlun.aluno
-    let adas = []
-    // entra no array de disciplinas pegando o nome
     aluno.forEach(function (alun) {
 
         alun.disciplinas.forEach(function (dis) {
             console.log(dis.nome)
             let nomes = dis.nome
+            nomeDisciplinas.push(nomes)
             let nome = nomes.split('')
 
-            nome.forEach(function (letra) {
-                console.log(nome)
-                if (letra != letra.toUpperCase()) {
-                    nome.slice(letra);
-                    adas.push(letra)
+            letrasDisciplinas.push(nome)
 
-
-                }
-
-
+            letrasDisciplinas.forEach(function (letra) {
+                const siglaDasDisciplinas = letra.filter(function (letraArray) {
+                    if (letraArray === letraArray.toLowerCase() || letraArray != letraArray.toUpperCase()) {
+                        letra.splice(letra.indexOf(letraArray), 1)
+                        return letra
+                    }
+                });
             })
-
-
-
-
-
         })
-    });
+    })
 
-    console.log(nomeDisciplinas)
+    letrasDisciplinas.forEach(function (array) {
+        const siglas = array.reduce((accumulator, letra) => `${accumulator}${letra}`);
+        siglaDisciplinas.push(siglas)
+    })
 
-    // pega media e status
+    console.log(siglaDisciplinas)
+
     aluno.forEach(function (alun) {
         alun.disciplinas.forEach(function (dis) {
             let media = dis.media
@@ -175,35 +171,16 @@ const graficoMedia = async (matricula) => {
             }
 
             notasMedia.push(media)
-            let status = dis.status
+
 
         })
     });
 
-    let sigla = []
-
-
-
-    // console.log(notasMedia)
-    // nomeDisciplinas.forEach(function (nomes) {
-    //     let a = nomes
-
-    //     a.forEach(function (palavras) {
-    //         let letras = palavras.substring(0, 1)
-
-    //         if (letras == letras.toLowerCase()) {
-    //             console.log('sim')
-    //         } else {
-
-    //         }
-
-    //     })
-    // })
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'uau'],
+            labels: siglaDisciplinas,
             datasets: [{
                 label: 'Media da nota',
                 data: notasMedia,

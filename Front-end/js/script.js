@@ -108,8 +108,7 @@ const carregarAluno = async (indice, matricula) => {
 
     let dadosAlun = await dadosAluno(matricula)
     let aluno = dadosAlun.aluno.map(criarDadosDoAluno)
-    // let mediaDeNotas = 
-    // let mediaAluno = dadosAlun.disciplinas.map()
+
 
     graficoMedia(matricula)
 
@@ -338,7 +337,6 @@ const sairEVoltarPagina = (estado) => {
 
     }
 }
-
 
 
 carregarCurso()
